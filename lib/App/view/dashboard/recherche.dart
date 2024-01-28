@@ -3,26 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/App/controller/weather.dart';
-import 'package:weather/App/model/weather.dart';
+import 'package:weather/App/model/donneesMeteoVille.dart';
 
-class Search extends StatefulWidget {
-  const Search({super.key});
+class Recherche extends StatefulWidget {
+  const Recherche({super.key});
 
   @override
-  State<Search> createState() => _SearchState();
+  State<Recherche> createState() => _EtatRecherche();
 }
 
-class _SearchState extends State<Search> {
+class _EtatRecherche extends State<Recherche> {
   // Contrôleur pour récupérer la valeur saisie dans le champ de recherche
-  TextEditingController search = TextEditingController();
-  String selectedCountryCode = "";
+  TextEditingController recherche = TextEditingController();
+  String codePaysSelectionne = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Recherche"),
+        automaticallyImplyLeading:false,
+        title: const Text("Recherche"),centerTitle: true,
       ),
-      body: Consumer<WeatherController>(builder: (context, value, child) {
+      body: Consumer<MeteoController>(builder: (context, value, child) {
         return Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -34,9 +35,9 @@ class _SearchState extends State<Search> {
                   padding: const EdgeInsets.all(8.0),
 
                   child: TextField(
-                    controller: search,
+                    controller: recherche,
                     decoration: InputDecoration(
-                      hintText: 'Ecrire',
+                      hintText: 'Ecrire la ville',
                       helperStyle: GoogleFonts.readexPro(),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
@@ -45,8 +46,8 @@ class _SearchState extends State<Search> {
                           // Lorsque l'utilisateur appuie sur le bouton de recherche,
                           // déclenche la recherche en utilisant WeatherController
 
-                          value.setIsSearch = true;
-                          value.getWeatherCity(capitalizeFirstCharacter(search.text.trim()), selectedCountryCode.toLowerCase());
+                          value.setEstRecherche = true;
+                          value.getWeatherCity(premiereLettreMajuscule(recherche.text.trim()), codePaysSelectionne.toLowerCase());
                         },
                         icon: const Icon(
                           Icons.search,
@@ -61,7 +62,7 @@ class _SearchState extends State<Search> {
                   CountryCodePicker(
                     onChanged: (CountryCode countryCode) {
                       setState(() {
-                        selectedCountryCode = countryCode.code!.toLowerCase().toString();
+                        codePaysSelectionne = countryCode.code!.toLowerCase().toString();
                       });
                     },
                     initialSelection: 'US', // Code de pays sélectionné initialement
@@ -72,7 +73,7 @@ class _SearchState extends State<Search> {
                   ),
                   SizedBox(height: 20),
               // Affiche les détails de la ville si la recherche est effectuée
-              value.isSearch == false
+              value.estRecherche == false
                   ? Container()
                   : Stack(
                       fit: StackFit.loose,
@@ -121,14 +122,14 @@ class _SearchState extends State<Search> {
                                         children: [
                                           // Température
                                           Text(
-                                            "${value.cityTemp} °C",
+                                            "${value.villeTemp} °C",
                                             style: GoogleFonts.readexPro(
                                                 color: Colors.white,
                                                 fontSize: 30),
                                           ),
                                           // Vitesse du vent
                                           Text(
-                                            "Vent-${value.cityWind} km/h",
+                                            "Vent-${value.villeVitesseVent} km/h",
                                             style: GoogleFonts.readexPro(
                                                 color: Colors.white,
                                                 fontSize: 18),
@@ -156,7 +157,7 @@ class _SearchState extends State<Search> {
                                               ),
                                             ),
                                             Text(
-                                              "${value.cityPressure}%",
+                                              "${value.villePression}%",
                                               style: GoogleFonts.readexPro(
                                                   color: Colors.white,
                                                   fontSize: 10,
@@ -177,7 +178,7 @@ class _SearchState extends State<Search> {
                                               ),
                                             ),
                                             Text(
-                                              "${value.cityVisibility/1000} km",
+                                              "${value.villeVisibilite/1000} km",
                                               style: GoogleFonts.readexPro(
                                                   color: Colors.white,
                                                   fontSize: 06,
@@ -202,7 +203,7 @@ class _SearchState extends State<Search> {
   }
 
   // Met en majuscule la première lettre de la recherche
-  String capitalizeFirstCharacter(String text) {
+  String premiereLettreMajuscule(String text) {
     if (text.isEmpty) {
       return text;
     }

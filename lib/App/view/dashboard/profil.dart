@@ -1,21 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:weather/App/utils/sharedPref.dart';
+import 'package:weather/App/utils/preferencesPartagees.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class Profil extends StatefulWidget {
+  const Profil({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<Profil> createState() => _EtatProfil();
 }
 
-class _ProfileState extends State<Profile> {
+class _EtatProfil extends State<Profil> {
   // Booléen pour le contrôle de l'interrupteur des notifications
   bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(title: const Text("Paramètres"),centerTitle: true,),
+      appBar: AppBar(
+        automaticallyImplyLeading:false,
+        title: const Text("Paramètres"),centerTitle: true,),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -110,7 +112,7 @@ class _ProfileState extends State<Profile> {
                 leading:  const Icon(CupertinoIcons.decrease_indent), // Your leading icon
                 title:  const Text("Effacer les données"),
                 onTap: (){
-                  SharedPreferencesManager().clearData();
+                  PreferencesPartageesManager().effaceDonnees();
                 },
                 subtitle: const Text("Effacer les données stockées"),
                 trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.clear_all_rounded)),

@@ -1,39 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../utils/sharedPref.dart';
+// Imporation de la gestion des préférences partagées depuis le fichier 'preferencesPartagees.dart' dans le dossier 'utils'.
+import '../../utils/preferencesPartagees.dart';
 
-class Cloud extends StatefulWidget {
-  const Cloud({super.key});
+class Vent extends StatefulWidget {
+  const Vent({super.key});
 
   @override
-  State<Cloud> createState() => _CloudState();
+  State<Vent> createState() => _VentState();
 }
 
-class _CloudState extends State<Cloud> {
-  TextEditingController cloud = TextEditingController();
+class _VentState extends State<Vent> {
+  // Contrôleur pour le champ de texte permettant à l'utilisateur de saisir la vitesse du vent.
+  TextEditingController ventController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Vent"),
+      ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              controller: cloud,
+              controller: ventController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                labelText: 'Enter cloud',
+                labelText: 'Entrez vitesse vent',
               ),
             ),
           ),
           InkWell(
             onTap: () async {
-              SharedPreferencesManager().saveCloud(cloud.text.trim());
+              // Lorsque l'utilisateur appuie sur le bouton "Set", la valeur du vent est sauvegardée localement.
+              PreferencesPartageesManager().vitesseVentSauvegardee(ventController.text.trim());
             },
             child: Container(
               width: 200,
@@ -44,7 +49,7 @@ class _CloudState extends State<Cloud> {
               ),
               child: Center(
                 child: Text(
-                  "Set",
+                  "Enregistrer",
                   style: GoogleFonts.readexPro(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

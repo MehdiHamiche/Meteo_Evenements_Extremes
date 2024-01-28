@@ -3,12 +3,12 @@ import 'package:geolocator/geolocator.dart';
 
 // Fonction asynchrone pour déterminer la position géographique
 Future<Position> determinePosition() async {
-  bool serviceEnabled;
+  bool serviceActiver;
   LocationPermission permission;
 
   // Vérifier si les services de localisation sont activés
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
+  serviceActiver = await Geolocator.isLocationServiceEnabled();
+  if (!serviceActiver) {
     // Les services de localisation ne sont pas activés
     return Future.error('Les services de localisation sont désactivés.');
   }

@@ -14,21 +14,21 @@ class Coord {
 }
 
 // Classe représentant les informations sur la météo (ID, temps, description et icône).
-class Weather {
+class Meteo {
   int id;
   String main;
   String description;
   String icon;
 
-  Weather({
+  Meteo({
     required this.id,
     required this.main,
     required this.description,
     required this.icon,
   });
 
-  factory Weather.fromJson(Map<String, dynamic> json) {
-    return Weather(
+  factory Meteo.fromJson(Map<String, dynamic> json) {
+    return Meteo(
       id: json['id'],
       main: json['main'],
       description: json['description'],
@@ -40,57 +40,57 @@ class Weather {
 // Classe représentant les informations principales sur la météo (température, sensation thermique, etc.).
 class Main {
   double temp;
-  double feelsLike;
+  double ressentie;
   double tempMin;
   double tempMax;
-  int pressure;
-  int humidity;
+  int pression;
+  int humidite;
 
   Main({
     required this.temp,
-    required this.feelsLike,
+    required this.ressentie,
     required this.tempMin,
     required this.tempMax,
-    required this.pressure,
-    required this.humidity,
+    required this.pression,
+    required this.humidite,
   });
 
   factory Main.fromJson(Map<String, dynamic> json) {
     return Main(
       temp: json['temp'].toDouble(),
-      feelsLike: json['feels_like'].toDouble(),
+      ressentie: json['feels_like'].toDouble(),
       tempMin: json['temp_min'].toDouble(),
       tempMax: json['temp_max'].toDouble(),
-      pressure: json['pressure'],
-      humidity: json['humidity'],
+      pression: json['pressure'],
+      humidite: json['humidity'],
     );
   }
 }
 
 // Classe représentant les informations sur le vent.
 class Wind {
-  double speed;
-  int deg;
+  double vitesse;
+  int degreeDirection;
 
-  Wind({required this.speed, required this.deg});
+  Wind({required this.vitesse, required this.degreeDirection});
 
   factory Wind.fromJson(Map<String, dynamic> json) {
     return Wind(
-      speed: json['speed'].toDouble(),
-      deg: json['deg'],
+      vitesse: json['speed'].toDouble(),
+      degreeDirection: json['deg'],
     );
   }
 }
 
 // Classe représentant les informations sur les nuages.
 class Clouds {
-  int all;
+  int nuageux;
 
-  Clouds({required this.all});
+  Clouds({required this.nuageux});
 
   factory Clouds.fromJson(Map<String, dynamic> json) {
     return Clouds(
-      all: json['all'],
+      nuageux: json['all'],
     );
   }
 }
@@ -99,77 +99,77 @@ class Clouds {
 class Sys {
   int type;
   int id;
-  String country;
-  int sunrise;
-  int sunset;
+  String pays;
+  int leverSoleil;
+  int coucherSoleil;
 
   Sys({
     required this.type,
     required this.id,
-    required this.country,
-    required this.sunrise,
-    required this.sunset,
+    required this.pays,
+    required this.leverSoleil,
+    required this.coucherSoleil,
   });
 
   factory Sys.fromJson(Map<String, dynamic> json) {
     return Sys(
       type: json['type'],
       id: json['id'],
-      country: json['country'],
-      sunrise: json['sunrise'],
-      sunset: json['sunset'],
+      pays: json['country'],
+      leverSoleil: json['sunrise'],
+      coucherSoleil: json['sunset'],
     );
   }
 }
 
 // Classe représentant l'ensemble des données météorologiques pour une ville spécifique.
-class CityWeatherData {
+class donneesMeteoVille {
   Coord coord;
-  List<Weather> weather;
+  List<Meteo> meteoListeVille;
   String base;
   Main main;
-  int visibility;
-  Wind wind;
-  Clouds clouds;
+  int visibilite;
+  Wind vent;
+  Clouds nuage;
   int dt;
   Sys sys;
-  int timezone;
+  int fuseauHoraire;
   int id;
-  String name;
+  String nomVille;
   int cod;
 
-  CityWeatherData({
+  donneesMeteoVille({
     required this.coord,
-    required this.weather,
+    required this.meteoListeVille,
     required this.base,
     required this.main,
-    required this.visibility,
-    required this.wind,
-    required this.clouds,
+    required this.visibilite,
+    required this.vent,
+    required this.nuage,
     required this.dt,
     required this.sys,
-    required this.timezone,
+    required this.fuseauHoraire,
     required this.id,
-    required this.name,
+    required this.nomVille,
     required this.cod,
   });
 
-  factory CityWeatherData.fromJson(Map<String, dynamic> json) {
-    return CityWeatherData(
+  factory donneesMeteoVille.fromJson(Map<String, dynamic> json) {
+    return donneesMeteoVille(
       coord: Coord.fromJson(json['coord']),
-      weather: (json['weather'] as List<dynamic>)
-          .map((item) => Weather.fromJson(item))
+      meteoListeVille: (json['weather'] as List<dynamic>)
+          .map((item) => Meteo.fromJson(item))
           .toList(),
       base: json['base'],
       main: Main.fromJson(json['main']),
-      visibility: json['visibility'],
-      wind: Wind.fromJson(json['wind']),
-      clouds: Clouds.fromJson(json['clouds']),
+      visibilite: json['visibility'],
+      vent: Wind.fromJson(json['wind']),
+      nuage: Clouds.fromJson(json['clouds']),
       dt: json['dt'],
       sys: Sys.fromJson(json['sys']),
-      timezone: json['timezone'],
+      fuseauHoraire: json['timezone'],
       id: json['id'],
-      name: json['name'],
+      nomVille: json['name'],
       cod: json['cod'],
     );
   }

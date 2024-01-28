@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/App/controller/weather.dart';
-import 'package:weather/App/view/dashboard/home.dart';
-import 'package:weather/App/view/dashboard/profile.dart';
-import 'package:weather/App/view/dashboard/search.dart';
+import 'package:weather/App/view/dashboard/accueil.dart';
+import 'package:weather/App/view/dashboard/profil.dart';
+import 'package:weather/App/view/dashboard/recherche.dart';
 
-// La classe BottemNav est un StatefulWidget qui représente la barre de navigation inférieure de l'application.
-class BottemNav extends StatefulWidget {
-  const BottemNav({super.key});
+// La classe BottomNav est un StatefulWidget qui représente la barre de navigation inférieure de l'application.
+class InferieurNav extends StatefulWidget {
+  const InferieurNav({super.key});
 
   @override
-  State<BottemNav> createState() => _BottemNavState();
+  State<InferieurNav> createState() => _InferieurNavState();
 }
 
-// La classe _BottemNavState est l'état associé à BottemNav.
-class _BottemNavState extends State<BottemNav> {
+// La classe _BottomNavState est l'état associé à BottomNav.
+class _InferieurNavState extends State<InferieurNav> {
   // Index de la page actuellement affichée dans la barre de navigation inférieure.
-  int currentPageIndex = 0;
+  int indexPageActuelle = 0;
   // Liste des écrans à afficher dans la barre de navigation inférieure.
-  List<Widget> screen = [
-    Home(),
-    Search(),
-    Profile(),
+  List<Widget> ecran = [
+    Accueil(),
+    Recherche(),
+    Profil(),
   ];
 
   // Contrôleur pour gérer les données météorologiques (à travers le package Provider).
-  WeatherController? _controller;
+  MeteoController? _controller;
   @override
   void initState() {
     // Initialisation du contrôleur de données météorologiques lors de la création de l'état.
@@ -39,7 +39,7 @@ class _BottemNavState extends State<BottemNav> {
     return Scaffold(
       // Le corps de l'écran est centré et affiche la page actuelle de la barre de navigation inférieure.
       body: Center(
-        child: screen[currentPageIndex],
+        child: ecran[indexPageActuelle],
       ),
       // La barre de navigation inférieure utilisant le widget NavigationBar.
       bottomNavigationBar: NavigationBar(
@@ -60,11 +60,11 @@ class _BottemNavState extends State<BottemNav> {
           ),
         ],
         // Index de l'élément actuellement sélectionné dans la barre de navigation inférieure.
-        selectedIndex: currentPageIndex,
+        selectedIndex: indexPageActuelle,
         onDestinationSelected: (int index) {
           setState(() {
             // Mise à jour de l'index de la page actuelle lorsqu'une destination est sélectionnée.
-            currentPageIndex = index;
+            indexPageActuelle = index;
           });
         },
       ),

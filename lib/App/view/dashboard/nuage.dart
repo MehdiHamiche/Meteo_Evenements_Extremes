@@ -1,57 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../utils/sharedPref.dart';
+import '../../utils/preferencesPartagees.dart';
 
-class Temp extends StatefulWidget {
-  const Temp({super.key});
+class Nuage extends StatefulWidget {
+  const Nuage({super.key});
 
   @override
-  State<Temp> createState() => _TempState();
+  State<Nuage> createState() => _NuageState();
 }
 
-class _TempState extends State<Temp> {
-  // Contrôleur pour récupérer la valeur saisie dans le champ de texte
-  TextEditingController temperatureController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
+class _NuageState extends State<Nuage> {
+  TextEditingController nuage = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Temperature"),
-      ),
+    return  Scaffold(
+      appBar: AppBar(),
       body: Column(
         children: [
-          // Champ de texte pour saisir la température
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              controller: temperatureController,
+              controller: nuage,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                labelText: 'Entrez la température',
+                labelText: 'Enter cloud',
               ),
             ),
           ),
-          // Bouton "Enregistrez" pour enregistrer la température
           InkWell(
             onTap: () async {
-              // Enregistrez la température dans les préférences partagées
-               SharedPreferencesManager().saveTemperature(temperatureController.text.trim());
+              PreferencesPartageesManager().nuageSauvegardee(nuage.text.trim());
             },
             child: Container(
               width: 200,

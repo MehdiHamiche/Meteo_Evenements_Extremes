@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/App/common/drawer.dart';
+import 'package:weather/App/common/clientNav.dart';
 import 'package:weather/App/controller/weather.dart';
-import 'package:weather/App/model/weather.dart';
+import 'package:weather/App/model/donneesMeteoVille.dart';
 import 'package:weather/App/utils/image.dart';
-import 'package:weather/App/utils/list.dart';
+import 'package:weather/App/utils/listeImage.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Accueil extends StatefulWidget {
+  const Accueil({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Accueil> createState() => _AccueilState();
 }
 
-class _HomeState extends State<Home> {
-  WeatherController? controller;
+class _AccueilState extends State<Accueil> {
+  MeteoController? controller;
 
   @override
   void initState() {
-    controller = Provider.of<WeatherController>(context, listen: false);
+    controller = Provider.of<MeteoController>(context, listen: false);
     super.initState();
   }
 
@@ -34,12 +34,15 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
 
-    String formattedTime = DateFormat('EEEE h:mm a').format(now);
+
+    DateTime actuel = DateTime.now();
+
+    String tempsFormate = DateFormat('EEEE k:m').format(actuel);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        automaticallyImplyLeading:false,
         title: Image.asset(
           F,
           height: 30,
@@ -48,7 +51,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [
           Image.asset(
-            sun,
+            soleil,
             height: 20,
             width: 30,
           ),
@@ -61,9 +64,9 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      drawer: CustomDrawer(),
+      drawer: ClientDrawer(),
       body: SingleChildScrollView(
-        child: Consumer<WeatherController>(builder: (context, value, child) {
+        child: Consumer<MeteoController>(builder: (context, value, child) {
           return Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -85,7 +88,7 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                         child: Text(
-                          value.country,
+                          value.pays,
                           style: GoogleFonts.readexPro(
                               fontSize: 20, color: Colors.white),
                         ),
@@ -95,7 +98,7 @@ class _HomeState extends State<Home> {
                           left: 10.0,
                         ),
                         child: Text(
-                          "${value.city}",
+                          "${value.ville}",
                           style: GoogleFonts.readexPro(color: Colors.white),
                         ),
                       ),
@@ -115,7 +118,7 @@ class _HomeState extends State<Home> {
                               ),
                               Column(
                                 children: [
-                                  Text("${value.temp.toString()} °C " ?? "",
+                                  Text("${value.temperature.toString()} °C " ?? "",
                                       style: GoogleFonts.readexPro(
                                           fontSize: 20, color: Colors.white)),
                                 ],
@@ -124,10 +127,10 @@ class _HomeState extends State<Home> {
                           ),
                           Column(
                             children: [
-                              Text("Weather",
+                              Text("Météo",
                                   style: GoogleFonts.readexPro(
                                       fontSize: 20, color: Colors.white)),
-                              Text(formattedTime,
+                              Text(tempsFormate,
                                   style: GoogleFonts.readexPro(
                                       color: Colors.white)),
                               const SizedBox(
@@ -143,7 +146,7 @@ class _HomeState extends State<Home> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: Text(
-                                    "Visibility ${value.visibility}",
+                                    "Visibilité ${value.visibilite}",
                                     style: GoogleFonts.readexPro(
                                         color: Colors.grey, fontSize: 10),
                                   ),
@@ -206,7 +209,7 @@ class _HomeState extends State<Home> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "${value.wind}km/h",
+                              "${value.vitesseVent}km/h",
                               style: GoogleFonts.readexPro(
                                   fontWeight: FontWeight.w400),
                             ),
@@ -229,7 +232,7 @@ class _HomeState extends State<Home> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Image.asset(
-                                  humi,
+                                  humidite,
                                   height: 20,
                                   width: 20,
                                 ),
@@ -238,7 +241,7 @@ class _HomeState extends State<Home> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "${value.humi}%",
+                                "${value.humidite}%",
                                 style: GoogleFonts.readexPro(
                                     fontWeight: FontWeight.w400),
                               ),
@@ -262,7 +265,7 @@ class _HomeState extends State<Home> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Image.asset(
-                                  cloud,
+                                  nuage,
                                   height: 20,
                                   width: 20,
                                 ),
@@ -271,7 +274,7 @@ class _HomeState extends State<Home> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "${value.cloud}%",
+                                "${value.nuage}%",
                                 style: GoogleFonts.readexPro(
                                     fontWeight: FontWeight.w400),
                               ),
@@ -295,7 +298,7 @@ class _HomeState extends State<Home> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Image.asset(
-                                  press,
+                                  pression,
                                   height: 20,
                                   width: 20,
                                 ),
@@ -304,7 +307,7 @@ class _HomeState extends State<Home> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "${value.pressure}",
+                                "${value.pression}",
                                 style: GoogleFonts.readexPro(
                                     fontWeight: FontWeight.w400),
                               ),

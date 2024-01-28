@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-// La classe CustomDrawer est un widget Stateless représentant un tiroir de navigation personnalisé.
-class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key});
+// La classe ClientDrawer est un widget Stateless représentant un tiroir de navigation personnalisé.
+class ClientDrawer extends StatelessWidget {
+  const ClientDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

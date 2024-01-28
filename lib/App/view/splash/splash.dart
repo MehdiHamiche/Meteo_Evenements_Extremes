@@ -21,7 +21,7 @@ class _MyWidgetState extends State<MyWidget> {
       // Selon la condition, l'application navigue vers différentes routes.
 
       // if (FirebaseAuth.instance.currentUser != null) {
-      //   Navigator.pushNamed(context, "/bottem");
+      //   Navigator.pushNamed(context, "/bottom");
       // } else {
       //   Navigator.pushNamed(context, "/login");
       // }

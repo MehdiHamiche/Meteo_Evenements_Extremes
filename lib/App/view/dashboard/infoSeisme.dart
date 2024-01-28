@@ -3,28 +3,28 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../model/earthquick.dart';
+import '../../model/donneesSeisme.dart';
 
-class Info extends StatefulWidget {
-  const Info({super.key});
+class InfoSeisme extends StatefulWidget {
+  const InfoSeisme({super.key});
 
   @override
-  State<Info> createState() => _InfoState();
+  State<InfoSeisme> createState() => _InfoSeismeState();
 }
 
-class _InfoState extends State<Info> {
-  late List<Earthquake> earthquakes;
-  bool isLoading = false;
+class _InfoSeismeState extends State<InfoSeisme> {
+  late List<Seisme> earthquakes;
+  bool enChargement = false;
 
   @override
   void initState() {
     super.initState();
-    fetchEarthquakeData();
+    recupDonneesSeisme();
   }
 
-  Future<void> fetchEarthquakeData() async {
+  Future<void> recupDonneesSeisme() async {
     setState(() {
-      isLoading = true;
+      enChargement = true;
     });
     final response = await http.get(Uri.parse(
         'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=5&limit=100'));
@@ -34,13 +34,13 @@ class _InfoState extends State<Info> {
 
 
       setState(() {
-        isLoading = false;
+        enChargement = false;
         earthquakes =
-            List<Earthquake>.from(features.map((e) => Earthquake.fromJson(e)));
+            List<Seisme>.from(features.map((e) => Seisme.fromJson(e)));
       });
     } else {
-      isLoading = false;
-      throw Exception('Failed to load earthquake data');
+      enChargement = false;
+      throw Exception('Echec du chargement des données sismologiques');
     }
   }
 
@@ -48,9 +48,9 @@ class _InfoState extends State<Info> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Earthquakes List'),
+        title: const Text('Liste des séismes'),
       ),
-      body: isLoading
+      body: enChargement
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -65,8 +65,8 @@ class _InfoState extends State<Info> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EarthquakeDetailScreen(
-                          earthquake: earthquakes,
+                        builder: (context) => EcranSeismeDetail(
+                          seisme: earthquakes,
                           index: index,
                         ),
                       ),
@@ -79,27 +79,27 @@ class _InfoState extends State<Info> {
   }
 }
 
-class EarthquakeDetailScreen extends StatelessWidget {
-  List<Earthquake>? earthquake;
+class EcranSeismeDetail extends StatelessWidget {
+  List<Seisme>? seisme;
   int index;
 
-   EarthquakeDetailScreen({super.key, required this.earthquake,required this.index});
+   EcranSeismeDetail({super.key, required this.seisme,required this.index});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Earthquake Details'),
+        title: const Text('Détails des données'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Magnitude: ${earthquake?[index].mag}'),
-            Text('Place: ${earthquake?[index].place}'),
+            Text('Magnitude: ${seisme?[index].mag}'),
+            Text('Lieu: ${seisme?[index].place}'),
             Text(
-                'Time: ${DateTime.fromMillisecondsSinceEpoch(earthquake![index].time)}'),
+                'Date et heure: ${DateTime.fromMillisecondsSinceEpoch(seisme![index].time)}'),
 
 
           ],
@@ -109,22 +109,22 @@ class EarthquakeDetailScreen extends StatelessWidget {
   }
 }
 
-class Earthquake {
+class Seisme {
   final double mag;
   final String place;
   final int time;
   final String? url;
 
-  Earthquake({
+  Seisme({
     required this.mag,
     required this.place,
     required this.time,
     this.url,
   });
 
-  factory Earthquake.fromJson(Map<String, dynamic> json) {
+  factory Seisme.fromJson(Map<String, dynamic> json) {
     final properties = json['properties'];
-    return Earthquake(
+    return Seisme(
       mag: properties['mag'].toDouble(),
       place: properties['place'],
       time: properties['time'],

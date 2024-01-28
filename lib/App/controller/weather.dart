@@ -2,30 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:weather/App/repository/weatherApiRepo.dart';
+import 'package:weather/App/repository/meteoApiRepo.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../utils/sharedPref.dart';
+import '../utils/preferencesPartagees.dart';
 
-// La classe WeatherController étend ChangeNotifier et agit comme un contrôleur pour la gestion des données météorologiques.
-class WeatherController extends ChangeNotifier {
-  WeatherController() {
+// La classe MeteoController étend ChangeNotifier et agit comme un contrôleur pour la gestion des données météorologiques.
+class MeteoController extends ChangeNotifier {
+  MeteoController() {
     // Initialise la détermination de la position lors de la création du contrôleur.
-    _determinePosition();
+    _determinerPosition();
   }
 
   // Booléen indiquant si la recherche est en cours.
-  bool _isSearch = false;
-  bool get isSearch => _isSearch;
+  bool _estRecherche = false;
+  bool get estRecherche => _estRecherche;
 
   // Getter et Setter pour la variable isSearch.
-  set setIsSearch(value) {
-    _isSearch = value;
+  set setEstRecherche(value) {
+    _estRecherche = value;
     notifyListeners();
   }
 
   // Méthode asynchrone pour déterminer la position actuelle de l'utilisateur.
-  Future<Position> _determinePosition() async {
+  Future<Position> _determinerPosition() async {
     // Vérifie si les services de localisation sont activés.
     bool serviceEnabled;
     LocationPermission permission;
@@ -79,8 +79,8 @@ class WeatherController extends ChangeNotifier {
 
       // Configuration du canal de notification Android.
       const AndroidNotificationChannel channel = AndroidNotificationChannel(
-        'high_importance_channel', // id
-        'High Importance Notifications', // titre
+        'canal à haute importance', // id
+        'Notifications très importantes', // titre
         description:
             'Ce canal est utilisé pour les notifications importantes.', // description
         importance: Importance.max,
@@ -106,8 +106,8 @@ class WeatherController extends ChangeNotifier {
       // Affichage de la notification.
       await flutterLocalNotificationsPlugin.show(
         0,
-        '$notify Alert',
-        'The $notify  is greater than or equal to the stored value.',
+        'Alerte $notify',
+        '$notify  supérieure ou égale à la valeur enregistrée.',
         platformChannelSpecifics,
         payload: 'default',
       );
@@ -148,123 +148,123 @@ class WeatherController extends ChangeNotifier {
   // }
 
   // Méthode pour vérifier les valeurs météorologiques et afficher des notifications en cas de dépassement des seuils.
-  Future<void> checkValueAndNotify() async {
-    final SharedPreferencesManager prefsManager = SharedPreferencesManager();
+  afficherValeurEtNotifier() async {
+    final PreferencesPartageesManager prefsManager = PreferencesPartageesManager();
 
     final int dataTemp = int.parse(prefsManager.getTemperature());
-    final int dataCloud = int.parse(prefsManager.getCloud());
-    final double dataCloud1 = double.parse(prefsManager.getCloud());
-    final int dataWind = int.parse(prefsManager.getWind());
-    final int dataHumidity = int.parse(prefsManager.gethumidity());
-    final double dataHumidity1 = double.parse(prefsManager.gethumidity());
+    final int dataCloud = int.parse(prefsManager.getNuage());
+    final double dataCloud1 = double.parse(prefsManager.getNuage());
+    final int dataWind = int.parse(prefsManager.getVitesseVent());
+    final int dataHumidity = int.parse(prefsManager.getHumidite());
+    final double dataHumidity1 = double.parse(prefsManager.getHumidite());
 
 
 
-    debugPrint("Temp .. $humi  .... $dataHumidity");
+    debugPrint("Temp .. $nuage  .... $dataCloud");
     if (dataTemp != 0) {
-      _checkAndNotify("Temperature", temp, dataTemp);
+      _verifierEtNotifier("Température", temperature, dataTemp);
     }
-    if (cloud.runtimeType == int) {
+    if (nuage.runtimeType == int) {
       if (dataCloud != 0) {
-        _checkAndNotify("Cloud", cloud, dataCloud);
+        _verifierEtNotifier("Nuage", nuage, dataCloud);
       }
-    } else if (cloud.runtimeType == double) {
-      if (dataCloud1 != 0.0) {
-        _checkAndNotify("Cloud", cloud, dataCloud1);
+    } else if (nuage.runtimeType == double) {
+      if (dataCloud != 0.0) {
+        _verifierEtNotifier("Nuage", nuage, dataCloud);
       }
     }
     if (dataWind != 0) {
-      _checkAndNotify("Wind", wind, dataWind);
+      _verifierEtNotifier("Vitesse du Vent", vitesseVent, dataWind);
     }
 
-    if (humi.runtimeType == int) {
-      if (humi != 0) {
-        _checkAndNotify("Humidity", humi, dataHumidity);
+    if (humidite.runtimeType == int) {
+      if (humidite != 0) {
+        _verifierEtNotifier("Humidité", humidite, dataHumidity);
       }
-    } else if (humi.runtimeType == double) {
-      if (humi != 0.0) {
-        _checkAndNotify("Humidity", humi, dataHumidity1);
+    } else if (humidite.runtimeType == double) {
+      if (humidite != 0.0) {
+        _verifierEtNotifier("Humidité", humidite, dataHumidity1);
       }
     }
   }
 
   // Méthode pour vérifier une valeur spécifique et afficher une notification si elle dépasse le seuil.
-  void _checkAndNotify(String type,  currentValue, threshold)async  {
+  void _verifierEtNotifier(String type,  currentValue, threshold)async  {
     if (currentValue >= threshold) {
-      debugPrint("$type Alert Notify");
-      await showNotification(type);
+      debugPrint("$type Alerte Notification");
+      showNotification(type);
     }
   }
 
   // Variables représentant les données météorologiques.
   String icon_url = "";
   String desc = "";
-  double temp = 0.0;
-  double temp_feel = 0.0;
-  int pressure = 0;
-  dynamic humi;
+  double temperature = 0.0;
+  double temp_ressentie = 0.0;
+  int pression = 0;
+  dynamic humidite = 0.0;
   double temp_max = 0.0;
   double temp_min = 0.0;
-  int visibility = 0;
-  String country = "";
-  double wind = 0;
-  var cloud;
-  String city = "";
+  int visibilite = 0;
+  String pays = "";
+  double vitesseVent = 0;
+  var nuage = 0;
+  String ville = "";
 
   // Instance de WeatherApiRepo pour obtenir les données météorologiques à partir de l'API.
-  WeatherApiRepo repo = WeatherApiRepo();
+  MeteoApiRepo repo = MeteoApiRepo();
 
   // Méthode pour obtenir toutes les données météorologiques actuelles.
   Future<void> getWeatherAll() async {
     // Récupère la position actuelle de l'utilisateur.
-    final location = await _determinePosition();
+    final location = await _determinerPosition();
     double lat = location.latitude;
     double lang = location.longitude;
 
     // Obtient les données météorologiques à partir de l'API en fonction de la position.
-    final weatherData = await repo.getWeatherData(lat, lang);
+    final weatherData = await repo.getDonneesMeteo(lat, lang);
     if (weatherData != null) {
       // Mise à jour des variables avec les nouvelles données.
       icon_url = "http://openweathermap.org/img/w/" +
-          weatherData.weather[0].icon +
+          weatherData.meteoListeActuelle[0].icon +
           ".png";
-      desc = weatherData.weather[0].description;
-      temp = weatherData.main.temp;
-      temp_feel = weatherData.main.feelsLike;
-      pressure = weatherData.main.pressure;
-      humi = weatherData.main.humidity;
+      desc = weatherData.meteoListeActuelle[0].description;
+      temperature = weatherData.main.temp;
+      temp_ressentie = weatherData.main.temperatureRessentie;
+      pression = weatherData.main.pression;
+      humidite = weatherData.main.humidite;
       temp_max = weatherData.main.tempMax;
       temp_min = weatherData.main.tempMin;
-      visibility = weatherData.visibility;
-      country = weatherData.sys.country!;
-      wind = weatherData.wind.speed;
-      cloud = weatherData.clouds.all;
-      city = weatherData.name.toString();
-      debugPrint(wind.toString());
+      visibilite = weatherData.visibilite;
+      pays = weatherData.sys.pays!;
+      vitesseVent = weatherData.vent.vitesseVent;
+      nuage = weatherData.nuages.nuageux;
+      ville = weatherData.nomVille.toString();
+      debugPrint(vitesseVent.toString());
 
       // Notifie les auditeurs (widgets) du changement de données.
       notifyListeners();
     }
 
     // Vérifie les seuils et affiche les notifications appropriées.
-    checkValueAndNotify();
+    afficherValeurEtNotifier();
   }
 
   // Variables pour stocker les données météorologiques d'une ville spécifique.
-  double cityTemp = 0.0;
-  double cityWind = 0.0;
-  int cityPressure = 0;
-  int cityVisibility = 0;
+  double villeTemp = 0.0;
+  double villeVitesseVent = 0.0;
+  int villePression = 0;
+  int villeVisibilite = 0;
 
   // Méthode pour obtenir les données météorologiques d'une ville spécifique.
   Future<void> getWeatherCity(String city, String countryCode) async {
-    final weatherCity = await repo.getWeatherDataByCity(city, countryCode);
+    final weatherCity = await repo.getDonneesMeteoParVille(city, countryCode);
     if (weatherCity != null) {
-      cityTemp = weatherCity.main.temp;
-      cityWind = weatherCity.wind.speed;
-      cityPressure = weatherCity.main.humidity;
-      cityVisibility = weatherCity.visibility;
-      debugPrint(weatherCity.visibility.toString());
+      villeTemp = weatherCity.main.temp;
+      villeVitesseVent = weatherCity.vent.vitesse;
+      villePression = weatherCity.main.humidite;
+      villeVisibilite = weatherCity.visibilite;
+      debugPrint(weatherCity.visibilite.toString());
       // Notifie les auditeurs (widgets) du changement de données.
       notifyListeners();
     }

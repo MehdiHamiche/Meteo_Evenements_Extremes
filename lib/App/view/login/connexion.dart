@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather/App/utils/image.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Connexion extends StatefulWidget {
+  const Connexion({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Connexion> createState() => _ConnexionState();
 }
 
-class _LoginState extends State<Login> {
+class _ConnexionState extends State<Connexion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,12 +55,12 @@ class _LoginState extends State<Login> {
                 child: InkWell(
                   onTap: () {
                     // FirebaseAuth.instance.signInAnonymously().then((value) {
-                    //   Navigator.popAndPushNamed(context, "/bottem");
+                    //   Navigator.popAndPushNamed(context, "/bottom");
                     // });
 
                     // Action à effectuer lorsqu'on appuie sur le bouton
                     // Dans ce cas, on navigue vers un autre écran avec la route "/bottem"
-                    Navigator.popAndPushNamed(context, "/bottem");
+                    Navigator.popAndPushNamed(context, "/bottom");
                   },
                   child: Container(
                     width: 300,

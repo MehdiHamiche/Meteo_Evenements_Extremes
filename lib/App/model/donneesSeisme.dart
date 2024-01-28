@@ -1,13 +1,13 @@
 // Classe principale représentant le modèle des tremblements de terre.
-class EarthquakeModel {
+class ModeleSeisme {
   String type;
   Metadata metadata;
   List<Feature> features;
 
-  EarthquakeModel({required this.type, required this.metadata, required this.features});
+  ModeleSeisme({required this.type, required this.metadata, required this.features});
 
-  factory EarthquakeModel.fromJson(Map<String, dynamic> json) {
-    return EarthquakeModel(
+  factory ModeleSeisme.fromJson(Map<String, dynamic> json) {
+    return ModeleSeisme(
       type: json['type'],
       metadata: Metadata.fromJson(json['metadata']),
       features: List<Feature>.from(json['features'].map((feature) => Feature.fromJson(feature))),
@@ -17,7 +17,7 @@ class EarthquakeModel {
 
 // Classe représentant les métadonnées liées aux tremblements de terre.
 class Metadata {
-  int generated;
+  int generer;
   String url;
   String title;
   int status;
@@ -27,7 +27,7 @@ class Metadata {
   int count;
 
   Metadata({
-    required this.generated,
+    required this.generer,
     required this.url,
     required this.title,
     required this.status,
@@ -37,9 +37,11 @@ class Metadata {
     required this.count,
   });
 
+  //La classe MetaData utilise le constructeur factory afin de créer des instances à partir des données JSON
+
   factory Metadata.fromJson(Map<String, dynamic> json) {
     return Metadata(
-      generated: json['generated'],
+      generer: json['generated'],
       url: json['url'],
       title: json['title'],
       status: json['status'],

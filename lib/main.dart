@@ -5,66 +5,66 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather/App/common/bottem.dart';
+import 'package:weather/App/common/inferieurNav.dart';
 import 'package:weather/App/controller/weather.dart';
-import 'package:weather/App/repository/weatherApiRepo.dart';
-import 'package:weather/App/view/dashboard/cloud.dart';
-import 'package:weather/App/view/dashboard/home.dart';
-import 'package:weather/App/view/dashboard/humidity.dart';
-import 'package:weather/App/view/dashboard/info.dart';
-import 'package:weather/App/view/dashboard/wind.dart';
-import 'package:weather/App/view/login/login.dart';
+import 'package:weather/App/repository/meteoApiRepo.dart';
+import 'package:weather/App/view/dashboard/nuage.dart';
+import 'package:weather/App/view/dashboard/accueil.dart';
+import 'package:weather/App/view/dashboard/humidite.dart';
+import 'package:weather/App/view/dashboard/infoSeisme.dart';
+import 'package:weather/App/view/dashboard/vent.dart';
+import 'package:weather/App/view/login/connexion.dart';
 import 'package:weather/App/view/splash/splash.dart';
 import 'package:workmanager/workmanager.dart';
 
-import 'App/utils/loocation.dart';
-import 'App/utils/sharedPref.dart';
-import 'App/view/dashboard/temp.dart';
+import 'App/utils/localisation.dart';
+import 'App/utils/preferencesPartagees.dart';
+import 'App/view/dashboard/temperature.dart';
 
 @pragma('vm:entry-point')
 Future<void> printHello() async {
   print("Native called background task:");
-  final location = await determinePosition();
-  final lat = location.latitude;
-  final lang = location.longitude;
-  WeatherApiRepo repo = WeatherApiRepo();
-  final data = await repo.getWeatherData(lat, lang);
+  final emplacemement = await determinePosition();
+  final lat = emplacemement.latitude;
+  final lang = emplacemement.longitude;
+  MeteoApiRepo repo = MeteoApiRepo();
+  final donnees = await repo.getDonneesMeteo(lat, lang);
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final storedValueTemp = int.parse(prefs.getString('temperature') ?? '0');
-  final storedValueWind = int.parse(prefs.getString('wind') ?? '0');
-  final dataCloud = int.parse(prefs.getString("cloud") ?? '0') ;
-  final dataHumidity = int.parse(prefs.getString("humidity") ?? '0');
+  final valeurTemperatureStockee = int.parse(prefs.getString('temperature') ?? '0');
+  final valeurVentStockee = int.parse(prefs.getString('wind') ?? '0');
+  final donneesNuage = int.parse(prefs.getString("cloud") ?? '0') ;
+  final dataHumidite = int.parse(prefs.getString("humidite") ?? '0');
 
-  final temp = data?.main.temp;
-  final wind = data?.wind.speed;
-  final humidity = data?.main.humidity;
-  final cloud = data?.clouds.all;
+  final temp = donnees?.main.temp;
+  final vent = donnees?.vent.vitesseVent;
+  final humidite = donnees?.main.humidite;
+  final nuage = donnees?.nuages.nuageux;
 
-    if (temp! >= storedValueTemp) {
-      if(storedValueTemp != 0)
+    if (temp! >= valeurTemperatureStockee) {
+      if(valeurTemperatureStockee != 0)
         {
           showNotification("Temperature");
         }
 
     }
-    if (wind! >= storedValueWind) {
-      if(storedValueWind != 0)
+    if (vent! >= valeurVentStockee) {
+      if(valeurVentStockee != 0)
         {
           showNotification("Wind");
         }
 
     }
-    if(humidity! >= dataHumidity )
+    if(humidite! >= dataHumidite )
       {
-        if(dataHumidity != 0)
+        if(dataHumidite != 0)
           {
             showNotification("Humidity");
           }
 
       }
-    if(cloud! >= dataCloud )
+    if(nuage! >= donneesNuage )
       {
-        if(dataCloud != 0)
+        if(donneesNuage != 0)
           {
             showNotification("Cloud");
           }
@@ -73,9 +73,9 @@ Future<void> printHello() async {
 
 }
 
-@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+@pragma('vm:entry-point')
 void callbackDispatcher() async {
-  print("Native called background task:");
+  print("Tâche de fond appelée nativement");
    Workmanager().executeTask((task, inputData) async {
     // final location = await determinePosition();
     // final lat = location.latitude;
@@ -91,7 +91,7 @@ void callbackDispatcher() async {
     // final dataHumidity1 =
     //     double.parse(prefs.getString("humidity") ?? "0.0" );
 
-    debugPrint("Run background");
+    debugPrint("Exécution en arrière-plan");
 
     //final temp = data?.main.temp;
     // final wind = data?.wind.speed;
@@ -144,10 +144,10 @@ Future showNotification(String notify) async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
+    'canal_haute_performance', // id
+    'Notifications très importantes', // title
     description:
-        'This channel is used for important notifications.', // description
+        'Ce canal est utilisé pour des notifications très importantes', // description
     importance: Importance.max,
   );
 
@@ -181,7 +181,7 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPreferencesManager().initSharedPreferences();
+  await PreferencesPartageesManager().preferencesPartageesInitiales();
   await AndroidAlarmManager.initialize();
   const int helloAlarmID = 0;
   await AndroidAlarmManager.periodic(
@@ -231,7 +231,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => WeatherController()),
+          ChangeNotifierProvider(create: (_) => MeteoController()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -243,14 +243,14 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             "/": (context) => const MyWidget(),
-            "/login": (context) => const Login(),
-            "/home": (context) => const Home(),
-            "/bottem": (context) => const BottemNav(),
-            "/info": (context) => const Info(),
-            "/temp": (context) => const Temp(),
-            "/wind": (context) => const Wind(),
-            "/humidity": (context) => const Humidity(),
-            "/cloud": (context) => const Cloud(),
+            "/login": (context) => const Connexion(),
+            "/accueil": (context) => const Accueil(),
+            "/bottom": (context) => const InferieurNav(),
+            "/info": (context) => const InfoSeisme(),
+            "/temp": (context) => const Temperature(),
+            "/wind": (context) => const Vent(),
+            "/humidity": (context) => const Humidite(),
+            "/cloud": (context) => const Nuage(),
           },
         ));
   }

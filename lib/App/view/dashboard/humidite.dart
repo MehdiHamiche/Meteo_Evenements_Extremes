@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../utils/sharedPref.dart';
-class Humidity extends StatefulWidget {
-  const Humidity({super.key});
+import '../../utils/preferencesPartagees.dart';
+class Humidite extends StatefulWidget {
+  const Humidite({super.key});
 
   @override
-  State<Humidity> createState() => _HumidityState();
+  State<Humidite> createState() => _HumiditeState();
 }
 
-class _HumidityState extends State<Humidity> {
-  TextEditingController humidity = TextEditingController();
+class _HumiditeState extends State<Humidite> {
+  TextEditingController humidite = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -20,7 +20,7 @@ class _HumidityState extends State<Humidity> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              controller: humidity,
+              controller: humidite,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -32,7 +32,7 @@ class _HumidityState extends State<Humidity> {
           ),
           InkWell(
             onTap: () async {
-              SharedPreferencesManager().saveHumidity(humidity.text.trim());
+              PreferencesPartageesManager().humiditeSauvegardee(humidite.text.trim());
             },
             child: Container(
               width: 200,

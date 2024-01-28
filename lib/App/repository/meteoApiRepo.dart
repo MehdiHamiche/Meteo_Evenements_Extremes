@@ -3,14 +3,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:weather/App/model/weather.dart'; // Importation du modèle de données pour les conditions météorologiques.
+import 'package:weather/App/model/donneesMeteoVille.dart'; // Importation du modèle de données pour les conditions météorologiques.
 
-import '../model/cityweather.dart'; // Importation du modèle de données pour les conditions météorologiques d'une ville.
+import '../model/coordonneesGeo.dart'; // Importation du modèle de données pour les conditions météorologiques d'une ville.
 
 // Classe responsable de l'interaction avec l'API météo pour récupérer les données.
-class WeatherApiRepo {
+class MeteoApiRepo {
   // Méthode pour obtenir les données météorologiques en fonction des coordonnées géographiques.
-  Future<WeatherData?> getWeatherData(lat, lang) async {
+  Future<DonneesMeteo?> getDonneesMeteo(lat, lang) async {
     try {
       // Construction de l'URL de l'API météo avec les coordonnées géographiques, la clé d'API et l'unité métrique.
       String url =
@@ -22,7 +22,7 @@ class WeatherApiRepo {
         // Si la réponse est réussie (code 200), on décode le JSON et crée une instance de WeatherData.
         final body = response.body;
         final jsonData = jsonDecode(body);
-        final data = WeatherData.fromJson(jsonData);
+        final data = DonneesMeteo.fromJson(jsonData);
         return data;
       } else {
         // En cas d'échec de la réponse HTTP, une exception est levée.
@@ -36,7 +36,7 @@ class WeatherApiRepo {
   }
 
   // Méthode pour obtenir les données météorologiques d'une ville en fonction du nom de la ville et du code du pays.
-  Future<CityWeatherData?> getWeatherDataByCity(String city, String countryCode) async {
+  Future<donneesMeteoVille?> getDonneesMeteoParVille(String city, String countryCode) async {
     try {
       // Construction de l'URL de l'API météo avec le nom de la ville, le code du pays, la clé d'API et l'unité métrique.
       String url =
@@ -48,7 +48,7 @@ class WeatherApiRepo {
         // Si la réponse est réussie (code 200), on décode le JSON et crée une instance de CityWeatherData.
         final body = response.body;
         final jsonData = jsonDecode(body);
-        final data = CityWeatherData.fromJson(jsonData);
+        final data = donneesMeteoVille.fromJson(jsonData);
         return data;
       } else {
         // En cas d'échec de la réponse HTTP, une exception est levée.

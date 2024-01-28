@@ -1,44 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// Imporation de la gestion des préférences partagées depuis le fichier 'sharedPref.dart' dans le dossier 'utils'.
-import '../../utils/sharedPref.dart';
+import '../../utils/preferencesPartagees.dart';
 
-class Wind extends StatefulWidget {
-  const Wind({super.key});
+class Temperature extends StatefulWidget {
+  const Temperature({super.key});
 
   @override
-  State<Wind> createState() => _WindState();
+  State<Temperature> createState() => _TemperatureState();
 }
 
-class _WindState extends State<Wind> {
-  // Contrôleur pour le champ de texte permettant à l'utilisateur de saisir la vitesse du vent.
-  TextEditingController windController = TextEditingController();
+class _TemperatureState extends State<Temperature> {
+  // Contrôleur pour récupérer la valeur saisie dans le champ de texte
+  TextEditingController temperatureController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Vent"),
+        title: const Text("Temperature"),
       ),
       body: Column(
         children: [
+          // Champ de texte pour saisir la température
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              controller: windController,
+              controller: temperatureController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                labelText: 'Entrez vitesse vent',
+                labelText: 'Entrez la température',
               ),
             ),
           ),
+          // Bouton "Enregistrez" pour enregistrer la température
           InkWell(
             onTap: () async {
-              // Lorsque l'utilisateur appuie sur le bouton "Set", la valeur du vent est sauvegardée localement.
-              SharedPreferencesManager().saveWind(windController.text.trim());
+              // Enregistrez la température dans les préférences partagées
+               PreferencesPartageesManager().temperatureSauvegardee(temperatureController.text.trim());
             },
             child: Container(
               width: 200,

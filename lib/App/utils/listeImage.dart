@@ -4,6 +4,6 @@ import 'package:weather/App/utils/image.dart';
 // Liste d'images utilisées dans l'application
 List image = [
   air,
-  cloud,
-  humi
+  nuage,
+  humidite
 ];
