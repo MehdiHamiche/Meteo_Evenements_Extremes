@@ -5,12 +5,17 @@ import 'package:http/http.dart' as http;
 
 import '../../model/donneesSeisme.dart';
 
+// La classe InfoSeisme est un StatefulWidget qui de gérer les informations sismologiques dans l'écran de Profil
+// InfoSeisme responsable de l'interaction avec l'API séisme pour récupérer les données.
+
 class InfoSeisme extends StatefulWidget {
   const InfoSeisme({super.key});
 
   @override
   State<InfoSeisme> createState() => _InfoSeismeState();
 }
+
+// La classe _InfoSeismeState est l'état associé à InfoSeisme.
 
 class _InfoSeismeState extends State<InfoSeisme> {
   late List<Seisme> earthquakes;
@@ -22,12 +27,16 @@ class _InfoSeismeState extends State<InfoSeisme> {
     recupDonneesSeisme();
   }
 
+  //Méthode qui récupère les données  sismologiques avec l'API earthquake
+
   Future<void> recupDonneesSeisme() async {
     setState(() {
       enChargement = true;
     });
+    // Envoi de la requête HTTP de type GET à l'API.
     final response = await http.get(Uri.parse(
         'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=5&limit=100'));
+    // Vérification du code de statut de la réponse HTTP.
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
        final features = data['features'];
@@ -48,6 +57,7 @@ class _InfoSeismeState extends State<InfoSeisme> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //En tête de la page de la liste des séismes
         title: const Text('Liste des séismes'),
       ),
       body: enChargement
@@ -79,6 +89,8 @@ class _InfoSeismeState extends State<InfoSeisme> {
   }
 }
 
+// La classe InfoSeisme est un StatelessWidget qui affiche les données sismologiques détaillées pour chaque ville
+
 class EcranSeismeDetail extends StatelessWidget {
   List<Seisme>? seisme;
   int index;
@@ -88,6 +100,7 @@ class EcranSeismeDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //En tête de la page des données détaillées
       appBar: AppBar(
         title: const Text('Détails des données'),
       ),
@@ -95,13 +108,12 @@ class EcranSeismeDetail extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          //Affichage de la magnitude, lieu, la date et l'heure
           children: [
             Text('Magnitude: ${seisme?[index].mag}'),
             Text('Lieu: ${seisme?[index].place}'),
             Text(
                 'Date et heure: ${DateTime.fromMillisecondsSinceEpoch(seisme![index].time)}'),
-
-
           ],
         ),
       ),
@@ -109,6 +121,7 @@ class EcranSeismeDetail extends StatelessWidget {
   }
 }
 
+//Classe représentant les informations sur les séismes
 class Seisme {
   final double mag;
   final String place;
@@ -121,7 +134,7 @@ class Seisme {
     required this.time,
     this.url,
   });
-
+// Méthode de fabrique pour créer une instance de Séisme à partir d'un JSON.
   factory Seisme.fromJson(Map<String, dynamic> json) {
     final properties = json['properties'];
     return Seisme(

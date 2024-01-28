@@ -1,10 +1,31 @@
-# weather
+# Application météo Flutter
 
-A new Flutter project.
+Dans notre module de programmation avancée, nous avons construit une application météo Flutter.
+L'application utilise l'API OpenWeatherMap pour récupérer les données météorologiques et les afficher sur notre  interface.
 
-## Getting Started
+## Caractéristiques de l'application
+- 1er caractéristique
+- 2eme caractéristique
+- 3eme caractéristique
+- 4eme caractéristique
 
-This project is a starting point for a Flutter application.
+
+## Capture d'écrans
+
+
+
+## Diagramme de classes
+
+
+
+## Membres du groupe
+Mehdi Hamiche
+Terry Tran
+
+
+
+## Appareil de test
+
 
 A few resources to get you started if this is your first Flutter project:
 

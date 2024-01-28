@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/preferencesPartagees.dart';
 
+// La classe Nuage est un StatefulWidget qui permet la saisie de la couverture nuageuse dans l'écran de Profil
+
 class Nuage extends StatefulWidget {
   const Nuage({super.key});
 
@@ -11,6 +13,7 @@ class Nuage extends StatefulWidget {
 }
 
 class _NuageState extends State<Nuage> {
+  // Contrôleur pour récupérer la valeur saisie dans le champ de texte
   TextEditingController nuage = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class _NuageState extends State<Nuage> {
           ),
           InkWell(
             onTap: () async {
+              // Lorsque l'utilisateur appuie sur le bouton "Enregistré", la valeur de la couverture nuageuse est sauvegardée localement.
               PreferencesPartageesManager().nuageSauvegardee(nuage.text.trim());
             },
             child: Container(
@@ -44,7 +48,7 @@ class _NuageState extends State<Nuage> {
               ),
               child: Center(
                 child: Text(
-                  "Enregistrer",
+                  "Enregistré",
                   style: GoogleFonts.readexPro(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

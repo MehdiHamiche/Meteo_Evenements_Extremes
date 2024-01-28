@@ -2,19 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/App/utils/preferencesPartagees.dart';
 
+
+// La classe Profil est un StatefulWidget qui gère l'écran Profil
+// Cette classe permet de gérer toutes les options proposées à l'utilisateur
 class Profil extends StatefulWidget {
   const Profil({super.key});
 
   @override
-  State<Profil> createState() => _EtatProfil();
+  State<Profil> createState() => _ProfilState();
 }
 
-class _EtatProfil extends State<Profil> {
+class _ProfilState extends State<Profil> {
   // Booléen pour le contrôle de l'interrupteur des notifications
   bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      //En tête de l'écran de Profil
       appBar: AppBar(
         automaticallyImplyLeading:false,
         title: const Text("Paramètres"),centerTitle: true,),

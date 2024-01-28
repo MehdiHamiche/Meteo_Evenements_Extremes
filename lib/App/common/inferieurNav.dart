@@ -5,7 +5,7 @@ import 'package:weather/App/view/dashboard/accueil.dart';
 import 'package:weather/App/view/dashboard/profil.dart';
 import 'package:weather/App/view/dashboard/recherche.dart';
 
-// La classe BottomNav est un StatefulWidget qui représente la barre de navigation inférieure de l'application.
+// La classe InferieurNav est un StatefulWidget qui représente la barre de navigation inférieure de l'application.
 class InferieurNav extends StatefulWidget {
   const InferieurNav({super.key});
 
@@ -13,7 +13,7 @@ class InferieurNav extends StatefulWidget {
   State<InferieurNav> createState() => _InferieurNavState();
 }
 
-// La classe _BottomNavState est l'état associé à BottomNav.
+// La classe _InferieurNavState est l'état associé à InferieurNav.
 class _InferieurNavState extends State<InferieurNav> {
   // Index de la page actuellement affichée dans la barre de navigation inférieure.
   int indexPageActuelle = 0;

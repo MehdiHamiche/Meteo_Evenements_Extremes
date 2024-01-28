@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/preferencesPartagees.dart';
+
+// La classe Humidite est un StatefulWidget qui permet la saisie de l'humidité dans l'écran de Profil .
 class Humidite extends StatefulWidget {
   const Humidite({super.key});
 
   @override
   State<Humidite> createState() => _HumiditeState();
 }
+
+// La classe _HumiditeState est l'état associé à Humidite.
 
 class _HumiditeState extends State<Humidite> {
   TextEditingController humidite = TextEditingController();
@@ -26,12 +30,13 @@ class _HumiditeState extends State<Humidite> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                labelText: 'Enter humidity',
+                labelText: "Entrer l'humidité",
               ),
             ),
           ),
           InkWell(
             onTap: () async {
+              // Lorsque l'utilisateur appuie sur le bouton "Enregistré", la valeur de l'humidité est sauvegardée localement.
               PreferencesPartageesManager().humiditeSauvegardee(humidite.text.trim());
             },
             child: Container(
@@ -43,7 +48,7 @@ class _HumiditeState extends State<Humidite> {
               ),
               child: Center(
                 child: Text(
-                  "Set",
+                  "Enregistré",
                   style: GoogleFonts.readexPro(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

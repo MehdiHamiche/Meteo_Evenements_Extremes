@@ -8,6 +8,8 @@ import 'package:weather/App/model/donneesMeteoVille.dart';
 import 'package:weather/App/utils/image.dart';
 import 'package:weather/App/utils/listeImage.dart';
 
+// La classe Accueil est un StatefulWidget qui représente l'écran d'accueil de l'application.
+
 class Accueil extends StatefulWidget {
   const Accueil({super.key});
 
@@ -15,16 +17,21 @@ class Accueil extends StatefulWidget {
   State<Accueil> createState() => _AccueilState();
 }
 
+// La classe _AccueilState est l'état associé à Accueil.
 class _AccueilState extends State<Accueil> {
+
+  //Contrôleur pour gérer les données affichées sur l'écran d'accueil
   MeteoController? controller;
 
   @override
   void initState() {
+    // Initialisation du contrôleur de données météorologiques lors de la création de l'état.
     controller = Provider.of<MeteoController>(context, listen: false);
     super.initState();
   }
 
   @override
+  //Cette méthode est appelée après initState() si un objet State dépend d'un widget hérité qui a changé.
   void didChangeDependencies() async {
     await controller?.getWeatherAll();
     super.didChangeDependencies();
@@ -41,6 +48,7 @@ class _AccueilState extends State<Accueil> {
     String tempsFormate = DateFormat('EEEE k:m').format(actuel);
     return Scaffold(
       key: _scaffoldKey,
+      //En tête de l'écran d'accueil
       appBar: AppBar(
         automaticallyImplyLeading:false,
         title: Image.asset(

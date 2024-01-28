@@ -5,20 +5,23 @@ import 'package:provider/provider.dart';
 import 'package:weather/App/controller/weather.dart';
 import 'package:weather/App/model/donneesMeteoVille.dart';
 
+// La classe Temperature est un StatefulWidget qui représente l'écran de Recherche
 class Recherche extends StatefulWidget {
   const Recherche({super.key});
 
   @override
-  State<Recherche> createState() => _EtatRecherche();
+  State<Recherche> createState() => _RechercheState();
 }
 
-class _EtatRecherche extends State<Recherche> {
+
+class _RechercheState extends State<Recherche> {
   // Contrôleur pour récupérer la valeur saisie dans le champ de recherche
   TextEditingController recherche = TextEditingController();
   String codePaysSelectionne = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //En tête de l'écran de recherche
       appBar: AppBar(
         automaticallyImplyLeading:false,
         title: const Text("Recherche"),centerTitle: true,
@@ -44,7 +47,7 @@ class _EtatRecherche extends State<Recherche> {
                       suffix: IconButton(
                         onPressed: () {
                           // Lorsque l'utilisateur appuie sur le bouton de recherche,
-                          // déclenche la recherche en utilisant WeatherController
+                          // déclenche la recherche en utilisant MeteoController
 
                           value.setEstRecherche = true;
                           value.getWeatherCity(premiereLettreMajuscule(recherche.text.trim()), codePaysSelectionne.toLowerCase());
@@ -65,8 +68,8 @@ class _EtatRecherche extends State<Recherche> {
                         codePaysSelectionne = countryCode.code!.toLowerCase().toString();
                       });
                     },
-                    initialSelection: 'US', // Code de pays sélectionné initialement
-                    favorite: ['+1', 'US'],
+                    initialSelection: 'FR', // Code de pays sélectionné initialement
+                    favorite: ['+1', 'FR'],
                     showCountryOnly: false,
                     showOnlyCountryWhenClosed: false,
                     alignLeft: false,

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather/App/utils/image.dart';
 
+// La classe Connexion est un StatefulWidget qui à l'utilisateur de se connecter en tant qu'invité
+
 class Connexion extends StatefulWidget {
   const Connexion({super.key});
 

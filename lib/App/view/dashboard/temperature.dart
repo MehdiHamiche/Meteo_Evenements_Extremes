@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/preferencesPartagees.dart';
 
+// La classe Temperature est un StatefulWidget qui permet la saisie de la température dans l'écran de Profil
+
 class Temperature extends StatefulWidget {
   const Temperature({super.key});
 
@@ -21,6 +23,7 @@ class _TemperatureState extends State<Temperature> {
   }
 
   @override
+  //Cette méthode est appelée après initState() si un objet State dépend d'un widget hérité qui a changé.
   void didChangeDependencies() {
     super.didChangeDependencies();
   }
@@ -50,7 +53,7 @@ class _TemperatureState extends State<Temperature> {
           // Bouton "Enregistrez" pour enregistrer la température
           InkWell(
             onTap: () async {
-              // Enregistrez la température dans les préférences partagées
+              // Lorsque l'utilisateur appuie sur le bouton "Enregistré", la valeur de la température est sauvegardée localement.
                PreferencesPartageesManager().temperatureSauvegardee(temperatureController.text.trim());
             },
             child: Container(
@@ -62,7 +65,7 @@ class _TemperatureState extends State<Temperature> {
               ),
               child: Center(
                 child: Text(
-                  "Enregistrer",
+                  "Enregistré",
                   style: GoogleFonts.readexPro(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 // Imporation de la gestion des préférences partagées depuis le fichier 'preferencesPartagees.dart' dans le dossier 'utils'.
 import '../../utils/preferencesPartagees.dart';
 
+// La classe Vent est un StatefulWidget qui permet la saisie de la vitesse du vent dans l'écran de Profil
+
 class Vent extends StatefulWidget {
   const Vent({super.key});
 
@@ -12,7 +14,7 @@ class Vent extends StatefulWidget {
 }
 
 class _VentState extends State<Vent> {
-  // Contrôleur pour le champ de texte permettant à l'utilisateur de saisir la vitesse du vent.
+  // Contrôleur pour récupérer la valeur saisie dans le champ de texte
   TextEditingController ventController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -31,13 +33,13 @@ class _VentState extends State<Vent> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                labelText: 'Entrez vitesse vent',
+                labelText: 'Entrez  la vitesse du vent',
               ),
             ),
           ),
           InkWell(
             onTap: () async {
-              // Lorsque l'utilisateur appuie sur le bouton "Set", la valeur du vent est sauvegardée localement.
+              // Lorsque l'utilisateur appuie sur le bouton "Enregistré", la valeur du vent est sauvegardée localement.
               PreferencesPartageesManager().vitesseVentSauvegardee(ventController.text.trim());
             },
             child: Container(
@@ -49,7 +51,7 @@ class _VentState extends State<Vent> {
               ),
               child: Center(
                 child: Text(
-                  "Enregistrer",
+                  "Enregistré",
                   style: GoogleFonts.readexPro(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
