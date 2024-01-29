@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/App/controller/meteoController.dart';
-import 'package:weather/App/model/donneesMeteoVille.dart';
+
 
 // La classe Temperature est un StatefulWidget qui représente l'écran de Recherche
 class Recherche extends StatefulWidget {

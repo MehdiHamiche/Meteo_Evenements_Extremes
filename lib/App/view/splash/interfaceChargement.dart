@@ -17,15 +17,6 @@ class _MyWidgetState extends State<MyWidget> {
     // Cette méthode est appelée une fois lorsque le widget est créé.
     // Elle utilise Future.delayed pour retarder l'exécution d'une action après une courte durée.
     Future.delayed(const Duration(seconds: 3), () {
-      // Après le délai, une vérification d'état est effectuée.
-      // Selon la condition, l'application navigue vers différentes routes.
-
-      // if (FirebaseAuth.instance.currentUser != null) {
-      //   Navigator.pushNamed(context, "/bottom");
-      // } else {
-      //   Navigator.pushNamed(context, "/login");
-      // }
-
       // Ici, l'application navigue vers la route "/login".
       Navigator.pushNamed(context, "/login");
     });

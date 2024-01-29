@@ -48,14 +48,6 @@ class _ProfilState extends State<Profil> {
                 ),
               ),
 
-              // Paramètre du profil avec une icône d'édition
-              ListTile(
-                leading: const Icon(Icons.person_2),
-                title: const Text("Profil"),
-                subtitle: const Text("Informations utilisateur"),
-                trailing:IconButton(onPressed: () {  }, icon: const Icon(Icons.edit),) ,
-              ),
-
               // Paramètre des tremblements de terre avec une icône d'édition
               ListTile(
                 leading: const Icon(Icons.event), // Your leading icon

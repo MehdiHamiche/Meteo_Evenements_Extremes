@@ -116,36 +116,6 @@ class MeteoController extends ChangeNotifier {
     }
   }
 
-  // checkValueAndNotify() async
-  // {
-  //   final dataTemp =  int.parse(SharedPreferencesManager().getTemperature()) ;
-  //   final dataCloud = int.parse(SharedPreferencesManager().getCloud()) ;
-  //   final dataWind = int.parse(SharedPreferencesManager().getWind());
-  //   final dataHumidity = int.parse(SharedPreferencesManager().gethumidity());
-  //   if(temp >= dataTemp)
-  //     {
-  //       debugPrint("Temp Alert Notify");
-  //       showNotification("Temperature");
-  //     }
-  //   if(cloud >= dataCloud)
-  //     {
-  //       debugPrint("Cloud Alert Notify");
-  //       showNotification("Cloud");
-  //     }
-  //   if(wind >=dataWind)
-  //     {
-  //       debugPrint("Wind Alert Notify");
-  //       showNotification("Wind");
-  //     }
-  //   if(humi >=dataHumidity)
-  //   {
-  //     debugPrint("Humidity Alert Notify");
-  //     showNotification("Humidity");
-  //   }
-  //
-  //
-  //
-  // }
 
   // Méthode pour vérifier les valeurs météorologiques et afficher des notifications en cas de dépassement des seuils.
   afficherValeurEtNotifier() async {

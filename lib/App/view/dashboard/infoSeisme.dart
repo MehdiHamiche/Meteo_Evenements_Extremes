@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../model/donneesSeisme.dart';
 
 // La classe InfoSeisme est un StatefulWidget qui de gérer les informations sismologiques dans l'écran de Profil
 // InfoSeisme responsable de l'interaction avec l'API séisme pour récupérer les données.

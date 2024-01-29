@@ -4,9 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/App/common/clientNav.dart';
 import 'package:weather/App/controller/meteoController.dart';
-import 'package:weather/App/model/donneesMeteoVille.dart';
 import 'package:weather/App/utils/image.dart';
-import 'package:weather/App/utils/listeImage.dart';
+
 
 // La classe Accueil est un StatefulWidget qui représente l'écran d'accueil de l'application.
 
@@ -51,20 +50,9 @@ class _AccueilState extends State<Accueil> {
       //En tête de l'écran d'accueil
       appBar: AppBar(
         automaticallyImplyLeading:false,
-        title: Image.asset(
-          F,
-          height: 30,
-          width: 60,
-        ),
         centerTitle: true,
         actions: [
-          Image.asset(
-            soleil,
-            height: 20,
-            width: 30,
-          ),
-          Text(
-            "Sunny Day",
+          Text("",
             style: GoogleFonts.readexPro(fontWeight: FontWeight.bold),
           ),
           const SizedBox(
@@ -95,6 +83,7 @@ class _AccueilState extends State<Accueil> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+                        //initial du pays en fonction de la position
                         child: Text(
                           value.pays,
                           style: GoogleFonts.readexPro(
@@ -105,6 +94,7 @@ class _AccueilState extends State<Accueil> {
                         padding: const EdgeInsets.only(
                           left: 10.0,
                         ),
+                        //nom de la ville en fonction de la position
                         child: Text(
                           "${value.ville}",
                           style: GoogleFonts.readexPro(color: Colors.white),
@@ -125,6 +115,7 @@ class _AccueilState extends State<Accueil> {
                                 width: 10,
                               ),
                               Column(
+                                //affichage de la température
                                 children: [
                                   Text("${value.temperature.toString()} °C " ?? "",
                                       style: GoogleFonts.readexPro(
@@ -217,6 +208,7 @@ class _AccueilState extends State<Accueil> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
+                              //affichage de la vitesse du vent
                               "${value.vitesseVent}km/h",
                               style: GoogleFonts.readexPro(
                                   fontWeight: FontWeight.w400),
@@ -249,6 +241,7 @@ class _AccueilState extends State<Accueil> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
+                                //affichage du taux d'humidité
                                 "${value.humidite}%",
                                 style: GoogleFonts.readexPro(
                                     fontWeight: FontWeight.w400),
@@ -282,6 +275,7 @@ class _AccueilState extends State<Accueil> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
+                                //affichage de la couverture nuageuse
                                 "${value.nuage}%",
                                 style: GoogleFonts.readexPro(
                                     fontWeight: FontWeight.w400),
@@ -315,6 +309,7 @@ class _AccueilState extends State<Accueil> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
+                                //affichage de la pression atmosphérique
                                 "${value.pression}",
                                 style: GoogleFonts.readexPro(
                                     fontWeight: FontWeight.w400),

@@ -1,5 +1,4 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
-//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -77,59 +76,7 @@ Future<void> printHello() async {
 void callbackDispatcher() async {
   print("Tâche de fond appelée nativement");
    Workmanager().executeTask((task, inputData) async {
-    // final location = await determinePosition();
-    // final lat = location.latitude;
-    // final lang = location.longitude;
-    // WeatherApiRepo repo = WeatherApiRepo();
-    // final data = await repo.getWeatherData(lat, lang);
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // final storedValueTemp = int.parse(prefs.getString('temperature') ?? '0');
-    // final storedValueWind = int.parse(prefs.getString('wind') ?? '0');
-    // final dataCloud = int.parse(prefs.getString("cloud") ?? "0");
-    // final dataHumidity = int.parse(prefs.getString("humidity") ?? "0");
-    // final dataCloud1 = double.parse(prefs.getString("cloud") ?? "0.0");
-    // final dataHumidity1 =
-    //     double.parse(prefs.getString("humidity") ?? "0.0" );
-
     debugPrint("Exécution en arrière-plan");
-
-    //final temp = data?.main.temp;
-    // final wind = data?.wind.speed;
-    // final humidity = data?.main.humidity;
-    // final cloud = data?.clouds.all;
-    //
-    // if (temp! >= storedValueTemp) {
-    //   if (storedValueTemp != 0) {
-    //     showNotification("Temperature");
-    //   }
-    // }
-    // if (wind! >= storedValueWind) {
-    //   if (storedValueWind != 0) {
-    //     showNotification("Wind");
-    //   }
-    // }
-    // if (humidity! >= dataHumidity) {
-    //   if (humidity.runtimeType == int) {
-    //     if (dataHumidity != 0) {
-    //       showNotification("Humidity");
-    //     }
-    //   } else if (humidity.runtimeType == double) {
-    //     if (dataHumidity1 != 0.0) {
-    //       showNotification("Humidity");
-    //     }
-    //   }
-    // }
-    // if (cloud! >= dataCloud) {
-    //   if (cloud.runtimeType == int) {
-    //     if (dataCloud != 0) {
-    //       showNotification("cloud");
-    //     }
-    //   } else if (cloud.runtimeType == double) {
-    //     if (dataCloud1 != 0.0) {
-    //       showNotification("cloud");
-    //     }
-    //   }
-    // }
     print(
         "Tâche d'arrière-plan appelée nativement: $task");
     return Future.value(true);
@@ -187,9 +134,9 @@ void main() async {
   await AndroidAlarmManager.periodic(
       const Duration(minutes: 5), helloAlarmID, printHello);
  await  Workmanager().initialize(
-      callbackDispatcher, // The top level function, aka callbackDispatcher
+      callbackDispatcher,
       isInDebugMode:
-          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+          true
       );
  await  Workmanager().registerPeriodicTask(
     "tempCallApi021",
@@ -208,7 +155,7 @@ Future<void> requestLocationPermission() async {
 
   if (status.isGranted) {
 
-    print('Location permission is already granted.');
+    print('Autorisation locale déjà acceptée.');
   } else if (status.isDenied) {
     // L'autorisation de localisation est refusée, demandez l'autorisation
     var result = await Permission.location.request();
@@ -218,7 +165,6 @@ Future<void> requestLocationPermission() async {
       print('Autorisation locale refusée.');
     }
   } else if (status.isPermanentlyDenied) {
-    // Location permission is permanently denied, take the user to app settings
     openAppSettings();
   }
 }
@@ -226,7 +172,6 @@ Future<void> requestLocationPermission() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

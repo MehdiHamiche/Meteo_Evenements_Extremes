@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../utils/preferencesPartagees.dart';
 
 // La classe Temperature est un StatefulWidget qui permet la saisie de la température dans l'écran de Profil
