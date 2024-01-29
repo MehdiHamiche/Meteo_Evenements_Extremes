@@ -116,7 +116,7 @@ class _ProfilState extends State<Profil> {
                 leading:  const Icon(CupertinoIcons.decrease_indent), // Your leading icon
                 title:  const Text("Effacer les données"),
                 onTap: (){
-                  PreferencesPartageesManager().effaceDonnees();
+                  PreferencesPartageesManager().effacerDonnees();
                 },
                 subtitle: const Text("Effacer les données stockées"),
                 trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.clear_all_rounded)),

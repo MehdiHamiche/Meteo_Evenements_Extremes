@@ -69,8 +69,8 @@ class _InfoSeismeState extends State<InfoSeisme> {
               itemBuilder: (context, index) {
                 return ListTile(
 
-                  title: Text('Magnitude: ${earthquakes[index].mag}'),
-                  subtitle: Text(earthquakes[index].place),
+                  title: Text('Magnitude: ${earthquakes[index].magnitude}'),
+                  subtitle: Text(earthquakes[index].lieu),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -110,10 +110,10 @@ class EcranSeismeDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           //Affichage de la magnitude, lieu, la date et l'heure
           children: [
-            Text('Magnitude: ${seisme?[index].mag}'),
-            Text('Lieu: ${seisme?[index].place}'),
+            Text('Magnitude: ${seisme?[index].magnitude}'),
+            Text('Lieu: ${seisme?[index].lieu}'),
             Text(
-                'Date et heure: ${DateTime.fromMillisecondsSinceEpoch(seisme![index].time)}'),
+                'Date et heure: ${DateTime.fromMillisecondsSinceEpoch(seisme![index].date)}'),
           ],
         ),
       ),
@@ -123,24 +123,24 @@ class EcranSeismeDetail extends StatelessWidget {
 
 //Classe représentant les informations sur les séismes
 class Seisme {
-  final double mag;
-  final String place;
-  final int time;
+  final double magnitude;
+  final String lieu;
+  final int date;
   final String? url;
 
   Seisme({
-    required this.mag,
-    required this.place,
-    required this.time,
+    required this.magnitude,
+    required this.lieu,
+    required this.date,
     this.url,
   });
 // Méthode de fabrique pour créer une instance de Séisme à partir d'un JSON.
   factory Seisme.fromJson(Map<String, dynamic> json) {
     final properties = json['properties'];
     return Seisme(
-      mag: properties['mag'].toDouble(),
-      place: properties['place'],
-      time: properties['time'],
+      magnitude: properties['mag'].toDouble(),
+      lieu: properties['place'],
+      date: properties['time'],
       url: properties['url'],
     );
   }

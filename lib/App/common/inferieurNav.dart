@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/App/controller/weather.dart';
+import 'package:weather/App/controller/meteoController.dart';
 import 'package:weather/App/view/dashboard/accueil.dart';
 import 'package:weather/App/view/dashboard/profil.dart';
 import 'package:weather/App/view/dashboard/recherche.dart';

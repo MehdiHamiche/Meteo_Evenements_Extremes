@@ -2,7 +2,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/App/controller/weather.dart';
+import 'package:weather/App/controller/meteoController.dart';
 import 'package:weather/App/model/donneesMeteoVille.dart';
 
 // La classe Temperature est un StatefulWidget qui représente l'écran de Recherche
@@ -24,7 +24,7 @@ class _RechercheState extends State<Recherche> {
       //En tête de l'écran de recherche
       appBar: AppBar(
         automaticallyImplyLeading:false,
-        title: const Text("Recherche"),centerTitle: true,
+        title: const Text("Metéo des villes"),centerTitle: true,
       ),
       body: Consumer<MeteoController>(builder: (context, value, child) {
         return Padding(
@@ -50,7 +50,7 @@ class _RechercheState extends State<Recherche> {
                           // déclenche la recherche en utilisant MeteoController
 
                           value.setEstRecherche = true;
-                          value.getWeatherCity(premiereLettreMajuscule(recherche.text.trim()), codePaysSelectionne.toLowerCase());
+                          value.getMeteoVille(premiereLettreMajuscule(recherche.text.trim()), codePaysSelectionne.toLowerCase());
                         },
                         icon: const Icon(
                           Icons.search,

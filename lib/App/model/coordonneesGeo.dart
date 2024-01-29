@@ -38,7 +38,7 @@ class Meteo {
 }
 
 // Classe représentant les informations principales sur la météo (température, sensation thermique, etc.).
-class Main {
+class InfoPrincipale {
   double temp;
   double ressentie;
   double tempMin;
@@ -46,7 +46,7 @@ class Main {
   int pression;
   int humidite;
 
-  Main({
+  InfoPrincipale({
     required this.temp,
     required this.ressentie,
     required this.tempMin,
@@ -55,8 +55,8 @@ class Main {
     required this.humidite,
   });
 
-  factory Main.fromJson(Map<String, dynamic> json) {
-    return Main(
+  factory InfoPrincipale.fromJson(Map<String, dynamic> json) {
+    return InfoPrincipale(
       temp: json['temp'].toDouble(),
       ressentie: json['feels_like'].toDouble(),
       tempMin: json['temp_min'].toDouble(),
@@ -68,14 +68,14 @@ class Main {
 }
 
 // Classe représentant les informations sur le vent.
-class Wind {
+class Vent {
   double vitesse;
   int degreeDirection;
 
-  Wind({required this.vitesse, required this.degreeDirection});
+  Vent({required this.vitesse, required this.degreeDirection});
 
-  factory Wind.fromJson(Map<String, dynamic> json) {
-    return Wind(
+  factory Vent.fromJson(Map<String, dynamic> json) {
+    return Vent(
       vitesse: json['speed'].toDouble(),
       degreeDirection: json['deg'],
     );
@@ -83,27 +83,27 @@ class Wind {
 }
 
 // Classe représentant les informations sur les nuages.
-class Clouds {
+class Nuages {
   int nuageux;
 
-  Clouds({required this.nuageux});
+  Nuages({required this.nuageux});
 
-  factory Clouds.fromJson(Map<String, dynamic> json) {
-    return Clouds(
+  factory Nuages.fromJson(Map<String, dynamic> json) {
+    return Nuages(
       nuageux: json['all'],
     );
   }
 }
 
 // Classe représentant les informations du système (type, ID, pays, lever/coucher du soleil, etc.).
-class Sys {
+class InfoSysteme {
   int type;
   int id;
   String pays;
   int leverSoleil;
   int coucherSoleil;
 
-  Sys({
+  InfoSysteme({
     required this.type,
     required this.id,
     required this.pays,
@@ -111,8 +111,8 @@ class Sys {
     required this.coucherSoleil,
   });
 
-  factory Sys.fromJson(Map<String, dynamic> json) {
-    return Sys(
+  factory InfoSysteme.fromJson(Map<String, dynamic> json) {
+    return InfoSysteme(
       type: json['type'],
       id: json['id'],
       pays: json['country'],
@@ -127,12 +127,12 @@ class donneesMeteoVille {
   Coord coord;
   List<Meteo> meteoListeVille;
   String base;
-  Main main;
+  InfoPrincipale main;
   int visibilite;
-  Wind vent;
-  Clouds nuage;
+  Vent vent;
+  Nuages nuage;
   int dt;
-  Sys sys;
+  InfoSysteme systeme;
   int fuseauHoraire;
   int id;
   String nomVille;
@@ -147,7 +147,7 @@ class donneesMeteoVille {
     required this.vent,
     required this.nuage,
     required this.dt,
-    required this.sys,
+    required this.systeme,
     required this.fuseauHoraire,
     required this.id,
     required this.nomVille,
@@ -161,12 +161,12 @@ class donneesMeteoVille {
           .map((item) => Meteo.fromJson(item))
           .toList(),
       base: json['base'],
-      main: Main.fromJson(json['main']),
+      main: InfoPrincipale.fromJson(json['main']),
       visibilite: json['visibility'],
-      vent: Wind.fromJson(json['wind']),
-      nuage: Clouds.fromJson(json['clouds']),
+      vent: Vent.fromJson(json['wind']),
+      nuage: Nuages.fromJson(json['clouds']),
       dt: json['dt'],
-      sys: Sys.fromJson(json['sys']),
+      systeme: InfoSysteme.fromJson(json['sys']),
       fuseauHoraire: json['timezone'],
       id: json['id'],
       nomVille: json['name'],

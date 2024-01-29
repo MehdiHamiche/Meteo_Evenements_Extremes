@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/App/common/inferieurNav.dart';
-import 'package:weather/App/controller/weather.dart';
+import 'package:weather/App/controller/meteoController.dart';
 import 'package:weather/App/repository/meteoApiRepo.dart';
 import 'package:weather/App/view/dashboard/nuage.dart';
 import 'package:weather/App/view/dashboard/accueil.dart';
@@ -14,7 +14,7 @@ import 'package:weather/App/view/dashboard/humidite.dart';
 import 'package:weather/App/view/dashboard/infoSeisme.dart';
 import 'package:weather/App/view/dashboard/vent.dart';
 import 'package:weather/App/view/login/connexion.dart';
-import 'package:weather/App/view/splash/splash.dart';
+import 'package:weather/App/view/splash/interfaceChargement.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'App/utils/localisation.dart';
@@ -131,7 +131,7 @@ void callbackDispatcher() async {
     //   }
     // }
     print(
-        "Native called background task: $task"); //simpleTask will be emitted here.
+        "Tâche d'arrière-plan appelée nativement: $task");
     return Future.value(true);
   });
 }
@@ -169,8 +169,8 @@ Future showNotification(String notify) async {
 
   await flutterLocalNotificationsPlugin.show(
     0,
-    '$notify Alert',
-    'The $notify is greater than or equal to the stored value.',
+    '$notify Alerte',
+    '$notify  supérieure ou égale à la valeur enregistrée.',
     platformChannelSpecifics,
     payload: 'Custom_Sound',
   );
@@ -207,15 +207,15 @@ Future<void> requestLocationPermission() async {
   var status = await Permission.location.status;
 
   if (status.isGranted) {
-    // Location permission is already granted
+
     print('Location permission is already granted.');
   } else if (status.isDenied) {
-    // Location permission is denied, request permission
+    // L'autorisation de localisation est refusée, demandez l'autorisation
     var result = await Permission.location.request();
     if (result.isGranted) {
-      print('Location permission granted.');
+      print('Autorisation locale acceptée.');
     } else {
-      print('Location permission denied.');
+      print('Autorisation locale refusée.');
     }
   } else if (status.isPermanentlyDenied) {
     // Location permission is permanently denied, take the user to app settings
@@ -241,10 +241,11 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
+          //Différents chemins menants aux différentes interfaces de l'application
           routes: {
             "/": (context) => const MyWidget(),
             "/login": (context) => const Connexion(),
-            "/accueil": (context) => const Accueil(),
+            "/home": (context) => const Accueil(),
             "/bottom": (context) => const InferieurNav(),
             "/info": (context) => const InfoSeisme(),
             "/temp": (context) => const Temperature(),

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/App/common/clientNav.dart';
-import 'package:weather/App/controller/weather.dart';
+import 'package:weather/App/controller/meteoController.dart';
 import 'package:weather/App/model/donneesMeteoVille.dart';
 import 'package:weather/App/utils/image.dart';
 import 'package:weather/App/utils/listeImage.dart';
@@ -33,7 +33,7 @@ class _AccueilState extends State<Accueil> {
   @override
   //Cette méthode est appelée après initState() si un objet State dépend d'un widget hérité qui a changé.
   void didChangeDependencies() async {
-    await controller?.getWeatherAll();
+    await controller?.getDonneesMeteoAll();
     super.didChangeDependencies();
   }
 
@@ -45,7 +45,7 @@ class _AccueilState extends State<Accueil> {
 
     DateTime actuel = DateTime.now();
 
-    String tempsFormate = DateFormat('EEEE k:m').format(actuel);
+    String tempsFormate = DateFormat('EEEE k:mm').format(actuel);
     return Scaffold(
       key: _scaffoldKey,
       //En tête de l'écran d'accueil
@@ -174,10 +174,10 @@ class _AccueilState extends State<Accueil> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text('High of ${value.temp_min}',
+                              Text('Plus basse température : ${value.temp_min}',
                                   style: GoogleFonts.readexPro(
                                       color: Colors.grey, fontSize: 10)),
-                              Text("with a low of ${value.temp_max}",
+                              Text(" et plus haute température : ${value.temp_max}",
                                   style: GoogleFonts.readexPro(
                                       color: Colors.grey, fontSize: 10)),
                             ],

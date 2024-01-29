@@ -1,14 +1,14 @@
 // Classe représentant les données météorologiques pour une ville.
 class DonneesMeteo {
-  Coord coord;            // Coordonnées géographiques de la ville.
-  List<Weather> meteoListeActuelle;  // Liste des conditions météorologiques actuelles.
+  Coordonnees coord;            // Coordonnées géographiques de la ville.
+  List<Meteo> meteoListeActuelle;  // Liste des conditions météorologiques actuelles.
   String base;            // Base de données utilisée pour les données météorologiques.
-  Main main;              // Informations principales telles que la température, la pression, etc.
+  InfoPrincipale main;              // Informations principales telles que la température, la pression, etc.
   int visibilite;         // Visibilité en mètres.
-  Wind vent;              // Informations sur le vent.
-  Clouds nuages;          // Informations sur les nuages.
+  Vent vent;              // Informations sur le vent.
+  Nuages nuages;          // Informations sur les nuages.
   int dt;                 // Timestamp de la dernière mise à jour des données.
-  Sys sys;                // Informations sur le système (pays, lever/coucher du soleil, etc.).
+  InfoSysteme systeme;                // Informations sur le système (pays, lever/coucher du soleil, etc.).
   int fuseauHoraire;      // Fuseau horaire de la ville en secondes.
   int idVille;            // Identifiant de la ville.
   String nomVille;        // Nom de la ville.
@@ -23,7 +23,7 @@ class DonneesMeteo {
     required this.vent,
     required this.nuages,
     required this.dt,
-    required this.sys,
+    required this.systeme,
     required this.fuseauHoraire,
     required this.idVille,
     required this.nomVille,
@@ -33,15 +33,15 @@ class DonneesMeteo {
   // Méthode de fabrique pour créer une instance de WeatherData à partir d'un JSON.
   factory DonneesMeteo.fromJson(Map<String, dynamic> json) {
     return DonneesMeteo(
-      coord: Coord.fromJson(json['coord']),
-      meteoListeActuelle: (json['weather'] as List).map((e) => Weather.fromJson(e)).toList(),
+      coord: Coordonnees.fromJson(json['coord']),
+      meteoListeActuelle: (json['weather'] as List).map((e) => Meteo.fromJson(e)).toList(),
       base: json['base'],
-      main: Main.fromJson(json['main']),
+      main: InfoPrincipale.fromJson(json['main']),
       visibilite: json['visibility'],
-      vent: Wind.fromJson(json['wind']),
-      nuages: Clouds.fromJson(json['clouds']),
+      vent: Vent.fromJson(json['wind']),
+      nuages: Nuages.fromJson(json['clouds']),
       dt: json['dt'],
-      sys: Sys.fromJson(json['sys']),
+      systeme: InfoSysteme.fromJson(json['sys']),
       fuseauHoraire: json['timezone'],
       idVille: json['id'],
       nomVille: json['name'],
@@ -51,18 +51,18 @@ class DonneesMeteo {
 }
 
 // Classe représentant les coordonnées géographiques (longitude et latitude).
-class Coord {
+class Coordonnees {
   double lon;   //longitude
   double lat;   //latitude
 
-  Coord({
+  Coordonnees({
     required this.lon,
     required this.lat,
   });
 
   // Méthode de fabrique pour créer une instance de Coord à partir d'un JSON.
-  factory Coord.fromJson(Map<String, dynamic> json) {
-    return Coord(
+  factory Coordonnees.fromJson(Map<String, dynamic> json) {
+    return Coordonnees(
       lon: json['lon'],
       lat: json['lat'],
     );
@@ -70,13 +70,13 @@ class Coord {
 }
 
 // Classe représentant les conditions météorologiques.
-class Weather {
+class Meteo {
   int id;
   String main;
   String description;
   String icon;
 
-  Weather({
+  Meteo({
     required this.id,
     required this.main,
     required this.description,
@@ -84,8 +84,8 @@ class Weather {
   });
 
   // Méthode de fabrique pour créer une instance de Weather à partir d'un JSON.
-  factory Weather.fromJson(Map<String, dynamic> json) {
-    return Weather(
+  factory Meteo.fromJson(Map<String, dynamic> json) {
+    return Meteo(
       id: json['id'],
       main: json['main'],
       description: json['description'],
@@ -95,7 +95,7 @@ class Weather {
 }
 
 // Classe représentant les informations principales sur la météo.
-class Main {
+class InfoPrincipale {
   double temp;         // Température actuelle.
   double temperatureRessentie;    // Température ressentie.
   double tempMin;      // Température minimale.
@@ -103,7 +103,7 @@ class Main {
   int pression;        // Pression atmosphérique.
   int humidite;        // Humidité atmosphérique.
 
-  Main({
+  InfoPrincipale({
     required this.temp,
     required this.temperatureRessentie,
     required this.tempMin,
@@ -113,8 +113,8 @@ class Main {
   });
 
   // Méthode de fabrique pour créer une instance de Main à partir d'un JSON.
-  factory Main.fromJson(Map<String, dynamic> json) {
-    return Main(
+  factory InfoPrincipale.fromJson(Map<String, dynamic> json) {
+    return InfoPrincipale(
       temp: json['temp'],
       temperatureRessentie: json['feels_like'],
       tempMin: json['temp_min'],
@@ -126,18 +126,18 @@ class Main {
 }
 
 // Classe représentant les informations sur le vent.
-class Wind {
+class Vent {
   double vitesseVent;        // Vitesse du vent.
   int degreeDirectionVent;             // Direction du vent en degrés.
 
-  Wind({
+  Vent({
     required this.vitesseVent,
     required this.degreeDirectionVent,
   });
 
   // Méthode de fabrique pour créer une instance de Wind à partir d'un JSON.
-  factory Wind.fromJson(Map<String, dynamic> json) {
-    return Wind(
+  factory Vent.fromJson(Map<String, dynamic> json) {
+    return Vent(
       vitesseVent: _parseDouble(json['speed']),
       degreeDirectionVent: json['deg'],
     );
@@ -156,30 +156,30 @@ double _parseDouble(dynamic value) {
 }
 
 // Classe représentant les informations sur les nuages.
-class Clouds {
+class Nuages {
   int nuageux;
 
-  Clouds({
+  Nuages({
     required this.nuageux,
   });
 
   // Méthode de fabrique pour créer une instance de Clouds à partir d'un JSON.
-  factory Clouds.fromJson(Map<String, dynamic> json) {
-    return Clouds(
+  factory Nuages.fromJson(Map<String, dynamic> json) {
+    return Nuages(
       nuageux: json['all'],
     );
   }
 }
 
 // Classe représentant les informations du système (pays, lever/coucher du soleil, etc.).
-class Sys {
+class InfoSysteme {
   int? type;      // Type de système (peut être null).
   int? id;        // Identifiant de système (peut être null).
   String? pays;   // Pays.
   int? leverSoleil;    // Timestamp du lever du soleil (peut être null).
   int? coucherSoleil;     // Timestamp du coucher du soleil (peut être null).
 
-  Sys({
+  InfoSysteme({
     required this.type,
     required this.id,
     required this.pays,
@@ -188,8 +188,8 @@ class Sys {
   });
 
   // Méthode de fabrique pour créer une instance de Sys à partir d'un JSON.
-  factory Sys.fromJson(Map<String, dynamic> json) {
-    return Sys(
+  factory InfoSysteme.fromJson(Map<String, dynamic> json) {
+    return InfoSysteme(
       type: json['type'] ?? 0,
       id: json['id'],
       pays: json['country'],

@@ -63,7 +63,7 @@ class MeteoController extends ChangeNotifier {
       FlutterLocalNotificationsPlugin();
 
   // Méthode pour afficher une notification locale.
-  Future showNotification(String notify) async {
+  Future afficherNotification(String notify) async {
     try {
       // Initialisation des notifications locales.
       flutterLocalNotificationsPlugin
@@ -99,7 +99,7 @@ class MeteoController extends ChangeNotifier {
         importance: Importance.max,
         priority: Priority.high,
         icon:
-            '@mipmap/ic_launcher', // Change this to the correct icon resource name
+            '@mipmap/ic_launcher',
         playSound: true,
       ));
 
@@ -192,7 +192,7 @@ class MeteoController extends ChangeNotifier {
   void _verifierEtNotifier(String type,  currentValue, threshold)async  {
     if (currentValue >= threshold) {
       debugPrint("$type Alerte Notification");
-      showNotification(type);
+      afficherNotification(type);
     }
   }
 
@@ -202,44 +202,44 @@ class MeteoController extends ChangeNotifier {
   double temperature = 0.0;
   double temp_ressentie = 0.0;
   int pression = 0;
-  dynamic humidite = 0.0;
+  dynamic humidite ;
   double temp_max = 0.0;
   double temp_min = 0.0;
   int visibilite = 0;
   String pays = "";
   double vitesseVent = 0;
-  var nuage = 0;
+  var nuage ;
   String ville = "";
 
   // Instance de WeatherApiRepo pour obtenir les données météorologiques à partir de l'API.
   MeteoApiRepo repo = MeteoApiRepo();
 
   // Méthode pour obtenir toutes les données météorologiques actuelles.
-  Future<void> getWeatherAll() async {
+  Future<void> getDonneesMeteoAll() async {
     // Récupère la position actuelle de l'utilisateur.
-    final location = await _determinerPosition();
-    double lat = location.latitude;
-    double lang = location.longitude;
+    final position = await _determinerPosition();
+    double lat = position.latitude;
+    double lang = position.longitude;
 
     // Obtient les données météorologiques à partir de l'API en fonction de la position.
-    final weatherData = await repo.getDonneesMeteo(lat, lang);
-    if (weatherData != null) {
+    final donneeMeteo = await repo.getDonneesMeteo(lat, lang);
+    if (donneeMeteo != null) {
       // Mise à jour des variables avec les nouvelles données.
       icon_url = "http://openweathermap.org/img/w/" +
-          weatherData.meteoListeActuelle[0].icon +
+          donneeMeteo.meteoListeActuelle[0].icon +
           ".png";
-      desc = weatherData.meteoListeActuelle[0].description;
-      temperature = weatherData.main.temp;
-      temp_ressentie = weatherData.main.temperatureRessentie;
-      pression = weatherData.main.pression;
-      humidite = weatherData.main.humidite;
-      temp_max = weatherData.main.tempMax;
-      temp_min = weatherData.main.tempMin;
-      visibilite = weatherData.visibilite;
-      pays = weatherData.sys.pays!;
-      vitesseVent = weatherData.vent.vitesseVent;
-      nuage = weatherData.nuages.nuageux;
-      ville = weatherData.nomVille.toString();
+      desc = donneeMeteo.meteoListeActuelle[0].description;
+      temperature = donneeMeteo.main.temp;
+      temp_ressentie = donneeMeteo.main.temperatureRessentie;
+      pression = donneeMeteo.main.pression;
+      humidite = donneeMeteo.main.humidite;
+      temp_max = donneeMeteo.main.tempMax;
+      temp_min = donneeMeteo.main.tempMin;
+      visibilite = donneeMeteo.visibilite;
+      pays = donneeMeteo.systeme.pays!;
+      vitesseVent = donneeMeteo.vent.vitesseVent;
+      nuage = donneeMeteo.nuages.nuageux;
+      ville = donneeMeteo.nomVille.toString();
       debugPrint(vitesseVent.toString());
 
       // Notifie les auditeurs (widgets) du changement de données.
@@ -257,7 +257,7 @@ class MeteoController extends ChangeNotifier {
   int villeVisibilite = 0;
 
   // Méthode pour obtenir les données météorologiques d'une ville spécifique.
-  Future<void> getWeatherCity(String city, String countryCode) async {
+  Future<void> getMeteoVille(String city, String countryCode) async {
     final weatherCity = await repo.getDonneesMeteoParVille(city, countryCode);
     if (weatherCity != null) {
       villeTemp = weatherCity.main.temp;
