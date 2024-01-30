@@ -6,8 +6,8 @@ Ainsi à l'aide de ces API, notre application peut afficher les données météo
 ## Caractéristiques de l'application
 - Affichage des données météorologiques (température, vitesse du vent, taux d'humidité,couverture nuageuse, pression atmosphérique) selon notre position actuelle
 - Recherche des données météorologiques d'une ville
-- Possibilité d'établir des seuils (température, vent, humidité, couverture nuageuse) selon les préférences de l'utilisateurs
-- Possibilité d'obtenir une liste détaillées des séismes dans le monde ainsi que leur magnitude
+- Possibilité d'établir des seuils (température, vent, humidité, couverture nuageuse) selon les préférences de l'utilisateur
+- Possibilité d'obtenir une liste détaillée des séismes dans le monde ainsi que leur magnitude
 
 ## Diagramme de classes
 ![diagrammeClasse](https://github.com/MehdiHamiche/Meteo_Evenements_Extremes/assets/117445844/4e327637-a48d-4117-94fe-89a66ac6172c)
