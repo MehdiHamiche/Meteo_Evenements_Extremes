@@ -46,7 +46,7 @@ flutter pub get
 ```
 
 ### 4. Lancer l'application
- - Depuis l'IDE : Lancez l'application avec le bouton "Run" de votre IDE.
+ - Depuis Android Studio : Lancez l'application avec le bouton "Run".
 
  - Depuis un terminal : Utilisez la commande suivante
 ```
